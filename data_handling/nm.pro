@@ -6,7 +6,7 @@
 ;	Return data normalized to 1.
 ;    
 ; CALLING SEQUENCE:
-;   result = nm( data )
+;   result = nm( data, [, ARRMAX= ] )
 ;	
 ; INPUTS:
 ;	arr 			- Array of data to normalize.
@@ -17,7 +17,8 @@
 ;   result			- An array the size of arr, normalized to 1.
 ;	 
 ; OPTIONAL OUTPUTS:
-;  
+;   ARRMAX          - Maximum value of input.
+;   
 ; COMMENTS:
 ;   Result is changed to float() if arr lower precision.
 ;	
@@ -29,10 +30,12 @@
 ; REVISION HISTORY:
 ;   2018-Jun-19  Written by Christopher M. Carroll (Dartmouth)
 ;-----------------------------------------------------------------------------------------
-FUNCTION nm, arr
+FUNCTION nm, arr, $
+             ARRMAX = nm
 
 
-return, arr/max(arr * 1.)
+nm = max(arr*1.)
+return, arr/nm
 
 
 END

@@ -3,7 +3,7 @@
 ;	rip_vars
 ;	
 ; PURPOSE:
-;	Extract the variable names within an IDL .SAV file.
+;	Extract all variable names within an IDL .SAV file without the need to restore.
 ;	
 ; CALLING SEQUENCE:
 ;   rip_vars, file
