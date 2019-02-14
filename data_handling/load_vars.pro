@@ -42,16 +42,20 @@ PRO load_vars, file, $
                block
 
 
+if (n_elements(block) eq 0) then begin
+    message, /info, 'NO COMMON BLOCK DESIGNATED'
+    retall
+endif
+
 ;; extract variable names
 vars = strjoin(rip_vars(file),',')
+
 ;; create COMMON block
-if (n_elements(block) eq 0) then block = '_VARS' else $
-                                 block = strupcase(block)
+block = strupcase(block)
 re = execute('common '+block+','+vars)
 ;; load variables
 restore, file
 
 
 END
-
 

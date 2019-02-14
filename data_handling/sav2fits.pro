@@ -38,13 +38,17 @@ FUNCTION sav2fits, file, $
 
 object = OBJ_NEW('IDL_Savefile', file[0])                   ;; save file to object
 vars = object->names()                                      ;; pull variables in object
-re = execute('common _load, '+strjoin(vars,','))            ;; create common block
+block = '_load_'+strjoin(strtrim(bin_date(),2))             ;; block name by system time
+re = execute('common '+block+', '+strjoin(vars,','))        ;; create common block
 restore,file                                                ;; restore variables into common block
 re = execute('struct = {'+strjoin(vars+":"+vars,",")+'}')   ;; fill variables into structure
 if keyword_set(aos) then struct = soa2aos(struct)           ;; Structure of Arrays to Array of Structures
-if keyword_set(sav) then mwrfits,struct,strsplit(file,'.sav',/extract,/regex)+'.fits',/CREATE
 
-return, struct
+if keyword_set(sav) then begin
+    mwrfits,struct,strsplit(file,'.sav',/extract,/regex)+'.fits',/CREATE
+    return,1
+endif else $
+    return, struct
 
 
 END
