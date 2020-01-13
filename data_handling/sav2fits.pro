@@ -43,8 +43,6 @@ re = execute('common '+block+', '+strjoin(vars,','))        ;; create common blo
 restore,file                                                ;; restore variables into common block
 re = execute('struct = {'+strjoin(vars+":"+vars,",")+'}')   ;; fill variables into structure
 if keyword_set(aos) then struct = soa2aos(struct)           ;; Structure of Arrays to Array of Structures
-<<<<<<< HEAD
-<<<<<<< HEAD
 if keyword_set(write) then mwrfits,struct,strsplit(file,'.sav',/extract,/regex)+'.fits',/CREATE
 
 return, struct
