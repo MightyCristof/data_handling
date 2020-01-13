@@ -33,7 +33,6 @@
 ;       BAND,BIN,DEC,E_FLUX,E_MAG,E_Z,E_ZARR,FLUX,MAG,OBJID,PARAM,RA,WAVE,Z,ZARR
 ;
 ; PROCEDURES CALLED:
-;   RIP_VARS.PRO
 ;   
 ; REVISION HISTORY:
 ;   2018-May-16  Written by Christopher M. Carroll (Dartmouth)
@@ -42,16 +41,22 @@ PRO load_vars, file, $
                block
 
 
+if (n_elements(block) eq 0) then begin
+    message, /info, 'NO COMMON BLOCK DESIGNATED'
+    retall
+endif
+
+;; load first .SAV file as an IDL_Savefile object
+object = OBJ_NEW('IDL_Savefile',file)
 ;; extract variable names
-vars = strjoin(rip_vars(file),',')
+vars = strjoin(object->names(),',')
+
 ;; create COMMON block
-if (n_elements(block) eq 0) then block = '_VARS' else $
-                                 block = strupcase(block)
+block = strupcase(block)
 re = execute('common '+block+','+vars)
 ;; load variables
 restore, file
 
 
 END
-
 

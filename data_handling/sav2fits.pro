@@ -9,12 +9,12 @@
 ;   struct = ( file, [, /AOS ] )
 ;
 ; INPUTS:
-;   file            - String containing the IDL save file.
+;   file            - String containing the IDL .SAV file.
 ;
 ; OPTIONAL INPUTS:
 ;   /AOS            - Set this keyword to return an array of structures. This only 
 ;                     works when each index contains a single value.
-;   /SAV            - Save IDL structure to FITS file.
+;   /WRITE          - Save IDL structure to FITS file.
 ;
 ; OUTPUTS:
 ;   struct          - IDL structure containing the save file data.
@@ -33,18 +33,26 @@
 ;-----------------------------------------------------------------------------------------
 FUNCTION sav2fits, file, $
                    AOS = aos, $
-                   SAV = sav
+                   WRITE = write
 
 
 object = OBJ_NEW('IDL_Savefile', file[0])                   ;; save file to object
 vars = object->names()                                      ;; pull variables in object
-re = execute('common _load, '+strjoin(vars,','))            ;; create common block
+block = '_load_'+strjoin(strtrim(bin_date(),2))             ;; block name by system time
+re = execute('common '+block+', '+strjoin(vars,','))        ;; create common block
 restore,file                                                ;; restore variables into common block
 re = execute('struct = {'+strjoin(vars+":"+vars,",")+'}')   ;; fill variables into structure
 if keyword_set(aos) then struct = soa2aos(struct)           ;; Structure of Arrays to Array of Structures
-if keyword_set(sav) then mwrfits,struct,strsplit(file,'.sav',/extract,/regex)+'.fits',/CREATE
+<<<<<<< HEAD
+if keyword_set(write) then mwrfits,struct,strsplit(file,'.sav',/extract,/regex)+'.fits',/CREATE
+=======
+>>>>>>> 2188ea964ca85381cc01568201d137f72b4fcc8e
 
-return, struct
+if keyword_set(sav) then begin
+    mwrfits,struct,strsplit(file,'.sav',/extract,/regex)+'.fits',/CREATE
+    return,1
+endif else $
+    return, struct
 
 
 END

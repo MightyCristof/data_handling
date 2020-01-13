@@ -1,11 +1,13 @@
-FUNCTION SoA2AoS, table
+FUNCTION soa2aos, table
 
   if (table eq !NULL) then return, !NULL
 
   tnames = tag_names(table)
   new_table = create_struct(tnames[0], (table.(0)[0]))
   for t = 1L, n_tags(table) - 1L do begin
-    new_table = create_struct(new_table, tnames[t], (table.(t))[0])
+    sz = size(table.(t),/n_dim)
+    if (sz eq 1) then new_table = create_struct(new_table, tnames[t], (table.(t))[0])
+    if (sz eq 2) then new_table = create_struct(new_table, tnames[t], (table.(t))[*,0])
   endfor
 
   new_table = replicate(new_table, n_elements(table.(0)))
