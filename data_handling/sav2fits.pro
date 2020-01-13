@@ -44,15 +44,10 @@ restore,file                                                ;; restore variables
 re = execute('struct = {'+strjoin(vars+":"+vars,",")+'}')   ;; fill variables into structure
 if keyword_set(aos) then struct = soa2aos(struct)           ;; Structure of Arrays to Array of Structures
 <<<<<<< HEAD
+<<<<<<< HEAD
 if keyword_set(write) then mwrfits,struct,strsplit(file,'.sav',/extract,/regex)+'.fits',/CREATE
-=======
->>>>>>> 2188ea964ca85381cc01568201d137f72b4fcc8e
 
-if keyword_set(sav) then begin
-    mwrfits,struct,strsplit(file,'.sav',/extract,/regex)+'.fits',/CREATE
-    return,1
-endif else $
-    return, struct
+return, struct
 
 
 END
