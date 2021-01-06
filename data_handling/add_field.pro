@@ -67,6 +67,8 @@ FUNCTION add_field, in_struct, $
 if (n_elements(ind) eq 0) then ind = -1
 ;; number of new fields
 nnew = n_elements(new_tags)
+;; number of sources
+;nrows = n_elements(in_struct)
 
 ;; pull tags and data from input structure
 tags = tag_names(in_struct)
@@ -79,6 +81,9 @@ new_vars = 'new_data'+string(indgen(nnew),format='(i02)')
 if (ind eq -1) then begin
     tags = [tags,new_tags]
     vars = [vars,new_vars]
+endif else if (ind eq 0) then begin
+    tags = [new_tags,tags]
+    vars = [new_vars,vars]
 endif else begin
     tags = [tags[0:ind-1],new_tags,tags[ind:-1]]
     vars = [vars[0:ind-1],new_vars,vars[ind:-1]]
