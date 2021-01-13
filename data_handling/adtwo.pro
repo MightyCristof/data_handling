@@ -1,4 +1,4 @@
-PRO adtwo, data1, data2, ad2
+PRO adtwo, data1, data2, a2, a2c
 ;+
 ; NAME:
 ;       KSTWO
@@ -49,8 +49,8 @@ PRO adtwo, data1, data2, ad2
   On_error, 2
   compile_opt idl2 
   
- if ( N_params() LT 3 ) then begin
-    print,'Syntax - ADTWO, data1, data2, ad2'
+ if ( N_params() LT 4 ) then begin
+    print,'Syntax - ADTWO, data1, data2, ad2, ad2crit'
     return
  endif
 
@@ -93,10 +93,11 @@ PRO adtwo, data1, data2, ad2
 ; functions
 
  ;D = max( abs( fn1[id1] - fn2[id2] ) ) 
- ad_stat = (fn1[id1]-fn2[id2])/(fn2[id2]*(1.-fn2[id2]))
- ad2 = total(ad_stat,/nan)/total(finite(ad_stat))
+ ad_stat = (fn1[id1]-fn2[id2])^2./(fn2[id2]*(1.-fn2[id2]))
+ a2 = total(ad_stat,/nan)/total(finite(ad_stat))
  ;N_eff =  long64(n1)*n2/ float(n1 + n2)           ;Effective # of data points
  ;PROB_KS, D, N_eff, prob                ;Compute significance of statistic
+ a2c = a2 * (1. + 0.75/n1 + 2.25/n1^2.)
 
  return
  end
