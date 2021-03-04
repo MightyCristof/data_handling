@@ -9,8 +9,8 @@
 ;   arr_round = rnd( vals, deci )
 ;   
 ; INPUTS:
-;	vals			- Scalar or vector of value(s) to be rounded.
-;	deci			- Scalar or vector of decimal place(s) to round input values.
+;	value			- Scalar or vector of value(s) to be rounded.
+;	digit			- Scalar or vector of decimal place(s) to round input values.
 ;
 ; OPTIONAL INPUTS:
 ;   
@@ -34,12 +34,14 @@
 ; REVISION HISTORY:
 ;   2020-Jan-06  Written by Christopher M. Carroll (Dartmouth)
 ;-----------------------------------------------------------------------------------------
-FUNCTION rnd, vals, $
-              deci
+FUNCTION rnd, value, $
+              digit
 
+sz = size(value, /type)
+if sz eq 5 then ten = 10d else ten = 10.
 
-deci = 10.^deci
-return, round(vals*deci)/deci
+if (n_elements(digit) eq 0) then digit = 0
+return, round(value*ten^digit)*ten^(-digit)
 
 
 END
