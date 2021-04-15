@@ -3,7 +3,7 @@
 ;	randomi
 ;	
 ; PURPOSE:
-;	Draw N random indices, without duplicates, from a range of values.
+;	Draw N random indices, with or without duplicates, from a range of values.
 ;	
 ; CALLING SEQUENCE:
 ;   irand = randomi( nind, rang )
@@ -13,10 +13,10 @@
 ;   rang            - Range of indices to draw from, starting from zero.
 ;	
 ; OPTIONAL INPUTS:
-;   irand           - Randomly drawn indices without duplicates.
+;   NODUP           - Draw random indices without duplicates.
 ;   
 ; OUTPUTS:
-;   out_struct		- IDL structure with new tag and data.
+;   irand           - Randomly drawn indices.
 ;	
 ; OPTIONAL OUTPUTS:
 ;  

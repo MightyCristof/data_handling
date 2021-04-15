@@ -1,4 +1,4 @@
-PRO adtwo, data1, data2, a2, a2c
+PRO adtwo, data1, data2, a2, ac
 ;+
 ; NAME:
 ;       KSTWO
@@ -89,15 +89,15 @@ PRO adtwo, data1, data2, a2, a2c
 
  id1 = id1[0:i-1]   &  id2 = id2[0:i-1]
 
-; The K-S statistic D is the maximum difference between the two distribution
-; functions
-
- ;D = max( abs( fn1[id1] - fn2[id2] ) ) 
+; AD test statistic
  ad_stat = (fn1[id1]-fn2[id2])^2./(fn2[id2]*(1.-fn2[id2]))
  a2 = total(ad_stat,/nan)/total(finite(ad_stat))
- ;N_eff =  long64(n1)*n2/ float(n1 + n2)           ;Effective # of data points
- ;PROB_KS, D, N_eff, prob                ;Compute significance of statistic
- a2c = a2 * (1. + 0.75/n1 + 2.25/n1^2.)
-
+ ;a2s = a2 * (1. + 0.75/n1 + 2.25/n1^2.)
+ 
+ ;; critical value
+ ;; Pettitt, A. N. A two-sample Anderson-Darling rank Statistic. Biometrika, 63, 161-168, 1976 
+ ;; large sample critical value approx: ad_inf = 2.492
+ ac = (2.492 - 1.)*(1. - 1.55/(n1+n2)) + 1.
+ 
  return
  end
