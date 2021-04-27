@@ -1,9 +1,10 @@
 FUNCTION width, arr, $
-                ALL = bin
+                MED = MED
 
 
-bin = abs(arr[0:-2]-arr[1:-1])
-w = median(bin)
+w = abs(arr[0:-2]-arr[1:-1])
+if keyword_set(med) then w = median(w)
+
 return, w
 
 
