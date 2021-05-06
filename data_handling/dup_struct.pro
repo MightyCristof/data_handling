@@ -3,15 +3,14 @@
 ;   dup_struct
 ;   
 ; PURPOSE:
-;   Duplicate a structure. The duplicate structure is blank.
+;   Create a blank, duplicate structure.
 ;   
 ; CALLING SEQUENCE:
-;   result = dup_struct( struct, [, BLANK=, NEW_TAGS= ] )
+;   result = dup_struct( struct, [, NEW_TAGS= ] )
 ;
 ; INPUTS:
 ;   
 ; OPTIONAL INPUTS:
-;   blank           - New structure is blank.
 ;   new_tags		- Replace tag names in new structure.
 ;   
 ; OUTPUTS:
@@ -55,9 +54,6 @@ re = execute('dup_struct = {'+strjoin(vars+":"+vars,",")+'}')
 ;; reform to array of structures
 dup_struct = soa2aos(dup_struct)
 
-if keyword_set(blank) then return, dup_struct
-
-for i = 0,nvars-1 do dup_struct.(i) = struct.(i)
 return, dup_struct
 
 
