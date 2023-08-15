@@ -7,10 +7,11 @@ FUNCTION mode, arr, $
 
 if keyword_set(kde) then begin
     ;; mode of smoothed distribution using kernel density estimation
-    type = size(kde,/type)
-    if (type lt 2 or type gt 5) then message, 'SPECIFY KDE BANDWIDTH FOR SMOOTHING.'
+    ;type = size(kde,/type)
+    ;if (type lt 2 or type gt 5) then message, 'SPECIFY KDE BANDWIDTH FOR SMOOTHING.'
+    binsz = kde_bandwidth(arr)
     mm = minmax(arr)
-    t = [mm[0]:mm[1]:kde]
+    t = [mm[0]:mm[1]:binsz]
     d = akde(arr,t)
     mode = t[where(d eq max(d))]
 endif else if keyword_set(bin) then begin

@@ -62,7 +62,7 @@ FUNCTION add_field, in_struct, $
                     new_data95, new_data96, new_data97, new_data98, new_data99, $
                     IND = ind
                   
-                  
+
 ;; if index not specified, append to end                  
 if (n_elements(ind) eq 0) then ind = -1
 ;; number of new fields
@@ -90,8 +90,10 @@ endif else begin
 endelse
 ;; create output structure string and fill it
 re = execute('out_struct = {'+strjoin(tags+":"+vars,",")+'}')
+;; if more than one row, change to AoS
+if (n_elements(in_struct) gt 1) then out_struct = soa2aos(out_struct)
 
-return, soa2aos(out_struct)
+return, out_struct
 
 
 END
